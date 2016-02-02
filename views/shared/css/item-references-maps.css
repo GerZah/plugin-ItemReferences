@@ -7,6 +7,7 @@
 }
 
 .itemRefTwoMapLegend a { text-decoration: none; }
+.itemRefTwoMapLegend a:hover { text-decoration: underline; }
 .itemRefTwoMapLegend p { padding: 0; margin: 0; }
 .itemRefTwoMapLegend img { height: 16px; }
 
@@ -20,3 +21,6 @@
   margin: 0.5em;
   display: none;
 }
+
+.refMapLink { font-weight: bold; }
+.refMapLink:hover { text-decoration: underline;  }

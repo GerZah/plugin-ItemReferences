@@ -14,7 +14,7 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
     'initialize',
     'install',
     'uninstall',
-    // 'after_save_item',
+    'after_save_item',
     'config_form',
     'config',
     'admin_head',
@@ -117,45 +117,73 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
     SELF::_uninstallOptions();
   }
 
+  protected function myAddSearchText($item, $enrichedSearchTexts) {
+    // http://omeka.org/forums/topic/adding-item-search-text-from-a-plugin
+    //look up the existing search text
+    $searchText = $this->_db->getTable('SearchText')->findByRecord('Item', $item->id);
+
+    // searchText should already exist, but if something goes wrong, create it
+    if (!$searchText) {
+      $searchText = new SearchText;
+      $searchText->record_type = 'Item';
+      $searchText->record_id = $item->id;
+      $searchText->public = $item->public;
+      $searchText->title = metadata($item, array('Dublin Core', 'Title'));
+    }
+    $searchText->text .= ' ' . $enrichedSearchTexts;
+    $searchText->save();
+  }
+
   /**
   * Retrieve referenced items' titles and add them to item's search text
   *
   * @param array $args
   */
-  // +#+#+# saving reference titles into the search index does not work consistently like that. :-(
-  // public function hookAfterSaveItem($args) {
-  //   if (!$args['post']) {
-  //     return;
-  //   }
-  //
-  //   $itemId = intval($args["record"]["id"]);
-  //   if ($itemId) {
-  //     $item = get_record_by_id('Item', $itemId);
-  //
-  //     $itemReferencesSelect = get_option('item_references_select');
-  //     $itemReferencesSelect = ( $itemReferencesSelect ? json_decode($itemReferencesSelect) : array() );
-  //
-  //     if ($itemReferencesSelect) {
-  //       $elementIds = implode(",", $itemReferencesSelect);
-  //       $db = get_db();
-  //       $sql = "SELECT text FROM $db->ElementTexts".
-  //               " WHERE record_id = $itemId".
-  //               " AND element_id in ($elementIds)";
-  //       $refItemIds = $db->fetchAll($sql);
-  //
-  //       if ($refItemIds) {
-  //         $refItemTitles = array();
-  //         foreach($refItemIds as $refItemId) {
-  //           $refItemTitles[] = SELF::getTitleForId($refItemId["text"]);
-  //         }
-  //         if ($refItemTitles) {
-  //           $item->addSearchText(implode(" ", $refItemTitles));
-  //           $item->save();
-  //         }
-  //       } // if ($refItemIds)
-  //     } // if ($itemReferencesSelect)
-  //   } // if ($itemId)
-  // }
+  // saving relation comments into the search index
+  public function hookAfterSaveItem($args) {
+    $itemId = intval(@$args["record"]["id"]);
+    if ($itemId) {
+      $item = get_record_by_id('Item', $itemId);
+
+      $itemReferencesSelect = get_option('item_references_select');
+      $itemReferencesSelect = ( $itemReferencesSelect ? json_decode($itemReferencesSelect) : array() );
+
+      if ($itemReferencesSelect) {
+        $elementIds = implode(",", $itemReferencesSelect);
+        $db = get_db();
+        $sql = "SELECT text FROM $db->ElementTexts".
+                " WHERE record_id = $itemId".
+                " AND element_id in ($elementIds)";
+        $refItemIds = $db->fetchAll($sql);
+
+        if ($refItemIds) {
+          $refItemTitles = array();
+          $firstLevelIds = array();
+          foreach($refItemIds as $refItemId) {
+            $firstLevelIds[] = $refItemId["text"];
+            $refItemTitles[] = SELF::getTitleForId($refItemId["text"]);
+          }
+
+          if ( ($firstLevelIds) and (SELF::$_withSecondLevel) ) {
+            $firstLevelIdsVerb = implode(",", $firstLevelIds);
+
+            $sql = "SELECT text FROM $db->ElementTexts".
+                    " WHERE record_id in ($firstLevelIdsVerb)".
+                    " AND element_id in ($elementIds)";
+            $refTwoItemIds = $db->fetchAll($sql);
+            foreach($refTwoItemIds as $refTwoItemId) {
+              $refItemTitles[] = SELF::getTitleForId($refTwoItemId["text"]);
+            }
+          }
+
+          if ($refItemTitles) {
+            $enrichedSearchTexts = implode(" ", $refItemTitles);
+            SELF::myAddSearchText($item, $enrichedSearchTexts);
+          }
+        } // if ($refItemIds)
+      } // if ($itemReferencesSelect)
+    } // if ($itemId)
+  }
 
   /**
   * Display the plugin configuration form.
@@ -303,6 +331,11 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
   * Same as hookAdminHead -- but for public item show (edit code obsolete in this scenario)
   */
   public function hookPublicHead() { SELF::hookAdminHead(); }
+
+  public function getTitleForId($itemId) {
+    $data = SELF::getDataForId($itemId);
+    return ($data ? $data["title"] : false);
+  }
 
   /**
   * Determine title for an item ID, numerical value if not present, or false if not accessible (public context)
@@ -517,7 +550,7 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
     $itemId = $item->id;
 
     $db = get_db();
-    $sql = "SELECT record_id FROM `$db->ElementTexts`".
+    $sql = "SELECT DISTINCT record_id FROM `$db->ElementTexts`".
           " WHERE element_id in ($referenceElementsStr)".
           " AND text = '$itemId'";
     $referencers = $db->fetchAll($sql);
@@ -581,7 +614,7 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
       $db = get_db();
 
       foreach(SELF::$_geoLocations as $elementId => $referenceMap) {
-        if ( ($referenceMap) and ($itemReferencesConfiguration[$elementId]>0) ) {
+        if ( ($referenceMap) and ($itemReferencesConfiguration[$elementId][0]>0) ) {
           $sql = "SELECT name FROM $db->Elements WHERE id = $elementId";
           $elementName = $db->fetchOne($sql);
           $output .= "<h4>$elementName</h4>\n";
@@ -669,7 +702,7 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
       $db = get_db();
 
       foreach(SELF::$_secondLevelGeoLocations as $elementId => $firstLevelRef) {
-        if ( ($firstLevelRef) and ($itemReferencesConfiguration[$elementId]>0) ) {
+        if ( ($firstLevelRef) and ($itemReferencesConfiguration[$elementId][0]>0) ) {
           $sql = "SELECT name FROM $db->Elements WHERE id = $elementId";
           $elementName = $db->fetchOne($sql);
           $output .= "<h4>$elementName</h4>\n";

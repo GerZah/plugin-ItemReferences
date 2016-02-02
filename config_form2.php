@@ -29,7 +29,7 @@
       echo "</div>";
       echo '<div class="inputs five columns omega">';
       echo '<div style="float:left; padding-right:1em; width:45%; border-right:thin dotted black;">';
-      $defaultType = $itemReferencesConfiguration[$elementId][0];
+      $defaultType = @$itemReferencesConfiguration[$elementId][0];
       $defaultType = ( $defaultType ? $defaultType : 0);
       echo $view->formRadio(
         "item_reference_type_$elementId",
@@ -45,7 +45,7 @@
       echo '<div style="float:left; padding-left:1em; width:45%;">';
       echo __("Color in Reference maps (both markers and lines):");
       // echo get_view()->formSelect('date_search_limit_fields', $LimitFields, array('multiple' => true, 'size' => 10), $searchElements);
-      $defaultColor = $itemReferencesConfiguration[$elementId][1];
+      $defaultColor = @$itemReferencesConfiguration[$elementId][1];
       $defaultColor = ( $defaultColor ? $defaultColor : 0);
       echo $view->formSelect(
         "item_reference_color_$elementId",
@@ -66,35 +66,4 @@
       echo "</div>";
     }
   ?>
-  <!-- <div class="field">
-      <div class="two columns alpha">
-          <label for="item_references_show_maps"><?php echo __('Display Reference Map'); ?></label>
-      </div>
-      <div class="inputs five columns omega">
-          <p class="explanation"><?php echo __('Check this if you want geolocations from referenced items to be displayed together in a combined map on the items/show page.'); ?></p>
-          <?php
-            echo $view->formCheckbox('item_references_show_maps',
-              true,
-              array('checked' => $itemReferencesShowMaps)
-            );
-          ?>
-      </div>
-  </div>
-  <div class="field">
-      <div class="two columns alpha">
-          <label for="item_references_show_lines"><?php echo __('Connect References with a Line'); ?></label>
-      </div>
-      <div class="inputs five columns omega">
-          <p class="explanation"><?php echo __('In case you selected to display the reference map, you may check this if you want the geolocations to be connected by a line.'); ?></p>
-          <?php
-            echo $view->formCheckbox('item_references_show_lines',
-              true,
-              array('checked' => $itemReferencesShowLines)
-            );
-          ?>
-      </div>
-  </div> -->
 </div>
-<?php
-  // echo "<pre style='clear:both;'>" . print_r($itemReferencesArr,true) . "</pre>";
-?>

@@ -34,16 +34,19 @@ jQuery( document ).ready(function() {
 
         latLngBounds.extend(new google.maps.LatLng(curLat, curLng));
 
+        var contentString = "<a href='"+curUrl+"' class='refMapLink'>"+curTitle+"</a>";
+        var infoWindow = new google.maps.InfoWindow({ content: contentString });
+
         mapsData[i].coords[j].marker = new google.maps.Marker({
           icon: 'http://maps.google.com/mapfiles/ms/icons/'+pinVerbColor+'-dot.png',
           title: curTitle,
           position: {lat: curLat, lng: curLng},
           map: thismap,
-          linkUrl: curUrl
+          infoWindow: infoWindow
         });
 
         google.maps.event.addListener(mapsData[i].coords[j].marker, 'click', function() {
-          window.location.href = this.linkUrl;
+          this.infoWindow.open(this.map, this);
         });
 
         if (itemReferencesShowLines) {
@@ -131,16 +134,19 @@ jQuery( document ).ready(function() {
 
           latLngTwoBounds.extend(new google.maps.LatLng(curLat, curLng));
 
+          var contentString = "<a href='"+curUrl+"' class='refMapLink'>"+curTitle+"</a>";
+          var infoWindow = new google.maps.InfoWindow({ content: contentString });
+
           coords[k].marker = new google.maps.Marker({
             icon: iconUrl,
             title: curTitle,
             position: {lat: curLat, lng: curLng},
             map: thismap,
-            linkUrl: curUrl
+            infoWindow: infoWindow
           });
 
           google.maps.event.addListener(coords[k].marker, 'click', function() {
-            window.location.href = this.linkUrl;
+            this.infoWindow.open(this.map, this);
           });
 
           if (itemReferencesShowTwoLines) {
@@ -171,11 +177,7 @@ jQuery( document ).ready(function() {
 
       thismap.controls[google.maps.ControlPosition.TOP_CENTER].push(
         document.getElementById(mapTwoLegend));
-      setTimeout(
-        function() {
-          $("#"+mapTwoLegend).css("display", "block");
-        }, 250
-      );
+      $("#"+mapTwoLegend).css("display", "block");
     }
   }
 

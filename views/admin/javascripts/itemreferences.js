@@ -4,7 +4,7 @@ jQuery(document).bind("omeka:elementformload", function() {
   var lightbox = lity(); // https://www.npmjs.com/package/lity
   var selectButtonTxt = $(".itemReferencesBtn").first().text();
 
-  $(".itemReferencesBtn").click(function(e) {
+  $(".itemReferencesBtn").unbind("click").click(function(e) {
     e.preventDefault();
 
     $("#new_relation_property_id").hide().prev().hide().prev().hide();
