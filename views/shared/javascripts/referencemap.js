@@ -181,19 +181,28 @@ jQuery( document ).ready(function() {
     }
   }
 
-  $(".refMapOvlSel").change( function() {
-    var overlayIdx = this.value;
+  function findMap(that) {
     var mapArr;
     var map;
-    if (typeof $(this).data("map-arr") != "undefined") {
-      mapArr = $(this).data("map-arr");
+    if (typeof $(that).data("map-arr") != "undefined") {
+      mapArr = $(that).data("map-arr");
       map = mapsData[mapArr].map;
     }
     else {
-      mapArr = $(this).data("map-two-arr");
+      mapArr = $(that).data("map-two-arr");
       map = mapsTwoData[mapArr].map;
     }
-    mapSelOverlay(overlayIdx, map)
+    return map;
+  }
+
+  $(".refMapOvlSel").change( function() {
+    var overlayIdx = this.value;
+    var map = findMap(this);
+    mapSelOverlay(overlayIdx, map);
+    var thisSlider = $(this).attr("id").replace("_ovl", "_slider");
+    if ($("#"+thisSlider).hasClass("ui-slider")) {
+      $("#"+thisSlider).slider("value", 100);
+    }
   } );
   $(".refMapOvlSel").change();
 
@@ -209,6 +218,23 @@ jQuery( document ).ready(function() {
       };
       map.mapOverlay = new google.maps.GroundOverlay( overlayData["imgUrl"], imageBounds);
       map.mapOverlay.setMap(map);
+    }
+  }
+
+  $(".refMapOvlSlider").slider({
+    min: 0,
+    max: 100,
+    slide: refMapOvlSetOverlayOpacity,
+    change: refMapOvlSetOverlayOpacity
+  })
+  .slider("value", 100);
+
+  function refMapOvlSetOverlayOpacity() {
+    var map = findMap(this);
+    var mapOverlay = map.mapOverlay;
+    if (typeof mapOverlay != 'undefined') {
+      var sliderPerc = $(this).slider("value");
+      mapOverlay.setOpacity(sliderPerc / 100);
     }
   }
 

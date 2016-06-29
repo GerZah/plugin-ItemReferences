@@ -24,3 +24,13 @@
 
 .refMapLink { font-weight: bold; }
 .refMapLink:hover { text-decoration: underline;  }
+
+.refMapOvlSlider {
+  display: inline-block;
+  width: 10em;
+  margin-left: 1em;
+}
+
+.reference_ovl_options {
+  margin: 0.5em 0;
+}

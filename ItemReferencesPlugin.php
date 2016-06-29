@@ -80,7 +80,7 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
   */
   protected function _retrieveReferenceElements() {
     $referenceElementsJson=get_option('item_references_select');
-    if (!$referenceElementsJson) { $referenceElementsJson="null"; }
+    if (!$referenceElementsJson) { $referenceElementsJson="[]"; }
     $referenceElements = json_decode($referenceElementsJson,true);
     return $referenceElements;
   }
@@ -145,8 +145,7 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
     if ($itemId) {
       $item = get_record_by_id('Item', $itemId);
 
-      $itemReferencesSelect = get_option('item_references_select');
-      $itemReferencesSelect = ( $itemReferencesSelect ? json_decode($itemReferencesSelect) : array() );
+      $itemReferencesSelect = SELF::_retrieveReferenceElements();
 
       if ($itemReferencesSelect) {
         $elementIds = implode(",", $itemReferencesSelect);
@@ -318,13 +317,43 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
     $action = $request->getActionName();
 
     if ($module === 'default' && $controller === 'items' && in_array($action, array('add', 'edit'))) {
-      queue_js_file('itemreferences');
+      $itemTypesList = array(
+          '-1' => '- ' . __('All') . ' -',
+      );
+      $itemTypesList += SELF::_getUsedItemTypes();
+      require dirname(__FILE__) . '/item-references-form.php';
     }
 
     if ($module === 'default' && $controller === 'items' && $action === 'show') {
       queue_js_file('referencemap');
     }
 
+  }
+  /**
+   * Get the list of used item types for select form.
+   *
+   * @return array
+   */
+  protected function _getUsedItemTypes()
+  {
+      $db = get_db();
+
+      $itemTypesTable = $db->getTable('ItemType');
+      $itemTypesAlias = $itemTypesTable->getTableAlias();
+
+      $select = $itemTypesTable->getSelect()
+          ->reset(Zend_Db_Select::COLUMNS)
+          ->from(array(), array($itemTypesAlias . '.id', $itemTypesAlias . '.name'))
+          ->joinInner(array('items' => $db->Item), "items.item_type_id = $itemTypesAlias.id", array())
+          ->group($itemTypesAlias . '.id')
+          ->order($itemTypesAlias . '.name ASC');
+
+      $permissions = new Omeka_Db_Select_PublicPermissions('Items');
+      $permissions->apply($select, 'items');
+
+      $itemTypes = $db->fetchPairs($select);
+
+      return $itemTypes;
   }
 
   /**
@@ -370,7 +399,7 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
     $components['input'] .= $view->formText(
                               $args['input_name_stem'] . '[text]'.'-title',
                               $itemTitle,
-                              array('readonly' => 'true', 'style' => 'width: auto;'),
+                              array('readonly' => 'true', 'style' => 'width: auto;', 'class' => 'itemReferencesField'),
                               null
                             );
     $components['input'] .= $view->formHidden(
@@ -651,17 +680,19 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
           if (count($reqOverlays) == 1) { $ovlDefault = array_keys($reqOverlays)[0]; }
 
           $output .= "<div id='".$data["mapId"]."' style='height:".$itemReferencesMapHeight."px; width:100%;'></div>\n";
+          $curCount = count($mapsData);
           if ($overlays) {
-            $output .= "<div><strong>".__("Select Map Overlay:")."</strong> ".
+            $output .= '<div class="reference_ovl_options"><strong>' . __("Select Map Overlay:") . '</strong> '.
               get_view()->formSelect(
                 $data["mapId"]."_ovl",
                 $ovlDefault,
                 array(
                   "class" => "refMapOvlSel",
-                  "data-map-arr" => count($mapsData), // latest added IDX - see above (*)
+                  "data-map-arr" => $curCount, // latest added IDX - see above (*)
                 ),
                 $overlays["jsSelect"]
               ).
+              "<span class='refMapOvlSlider' id='".$data["mapId"]."_slider' data-map-arr='".$curCount."'></span>".
               "</div>";
           }
 
@@ -757,17 +788,19 @@ class ItemReferencesPlugin extends Omeka_Plugin_AbstractPlugin
           if (count($reqOverlays) == 1) { $ovlDefault = array_keys($reqOverlays)[0]; }
 
           $output .= "<div id='".$data["mapId"]."' style='height:".$itemReferencesMapHeight."px; width:100%;'></div>\n";
+          $curSecondCount = count($secondLevelMapsData);
           if ($overlays) {
-            $output .= "<div><strong>".__("Select Map Overlay:")."</strong> ".
+            $output .= '<div class="reference_ovl_options"><strong>'.__("Select Map Overlay:").'</strong> '.
               get_view()->formSelect(
                 $data["mapId"]."_ovl",
                 $ovlDefault,
                 array(
                   "class" => "refMapOvlSel",
-                  "data-map-two-arr" => count($secondLevelMapsData), // latest added IDX - see above (*)
+                  "data-map-two-arr" => $curSecondCount, // latest added IDX - see above (*)
                 ),
                 $overlays["jsSelect"]
               ).
+              "<span class='refMapOvlSlider' id='".$data["mapId"]."_slider' data-map-two-arr='".$curSecondCount."'></span>".
               "</div>";
           }
           $output .= "<div id='".$data["mapId"]."_legend' class='itemRefTwoMapLegend'></div>";

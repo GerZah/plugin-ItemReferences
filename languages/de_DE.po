@@ -9,37 +9,41 @@ msgstr ""
 "Project-Id-Version: WeSa Omeka\n"
 "Report-Msgid-Bugs-To: http://github.com/GerZah/plugin-ItemReferences/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2016-02-10 14:19+0100\n"
-"Last-Translator: githanjalli <anjallinhere@gmail.com>\n"
+"PO-Revision-Date: 2016-02-16 13:58+0100\n"
+"Last-Translator: Gero Zahn <gerozahn@campus.uni-paderborn.de>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/upb/wesa-omeka/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.7\n"
 
-#: ItemReferencesPlugin.php:383
+#: ItemReferencesPlugin.php:322
+msgid "All"
+msgstr "Alle"
+
+#: ItemReferencesPlugin.php:413
 msgid "Clear"
 msgstr "Löschen"
 
-#: ItemReferencesPlugin.php:410 ItemReferencesPlugin.php:494
+#: ItemReferencesPlugin.php:440 ItemReferencesPlugin.php:524
 msgid "Reference"
 msgstr "Referenz"
 
-#: ItemReferencesPlugin.php:559
+#: ItemReferencesPlugin.php:589
 msgid "Items Referencing this Item"
 msgstr "Objekte, die dieses Objekt referenzieren"
 
-#: ItemReferencesPlugin.php:607
+#: ItemReferencesPlugin.php:637
 msgid "Geolocations of References Items"
 msgstr "Geolokalisierungen von referenzierten Objekten"
 
-#: ItemReferencesPlugin.php:655 ItemReferencesPlugin.php:761
+#: ItemReferencesPlugin.php:685 ItemReferencesPlugin.php:791
 msgid "Select Map Overlay:"
 msgstr "Kartenüberlagerung auswählen:"
 
-#: ItemReferencesPlugin.php:695
+#: ItemReferencesPlugin.php:725
 msgid "Geolocations of Second Level References Items"
 msgstr "Geolokalisierungen von referenzierten Objekten zweiter Ordnung"
 
@@ -138,6 +142,26 @@ msgstr "violett"
 #: config_form2.php:62
 msgid "pink"
 msgstr "rosa"
+
+#: item-references-form.php:21
+msgid "Item Sort"
+msgstr "Objektsortierung"
+
+#: item-references-form.php:24
+msgid "Most recently updated"
+msgstr "Kürzlich bearbeitet"
+
+#: item-references-form.php:26
+msgid "Alphabetically"
+msgstr "Alphabetisch"
+
+#: item-references-form.php:30
+msgid "Object Title"
+msgstr "Objekt-Titel"
+
+#: item-references-form.php:32
+msgid "Partial Object Title"
+msgstr "Teilweiser Objekt-Titel"
 
 #: views/admin/index/index.php:2
 msgid "Item References"
