@@ -11,38 +11,50 @@ msgstr ""
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gero Zahn<gero.zahn@upb.de>\n"
-"Language-Team: English (https://www.transifex.com/upb/wesa-omeka/"
-
+"Language-Team: English (https://www.transifex.com/upb/wesa-omeka/)\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ItemReferencesPlugin.php:322
+#: ItemReferencesPlugin.php:227
+msgid "Item Type"
+msgstr ""
+
+#: ItemReferencesPlugin.php:321
 msgid "All"
 msgstr ""
 
-#: ItemReferencesPlugin.php:413
+#: ItemReferencesPlugin.php:411 item-references-form.php:85
+msgid "Select"
+msgstr ""
+
+#: ItemReferencesPlugin.php:412
 msgid "Clear"
 msgstr ""
 
-#: ItemReferencesPlugin.php:440 ItemReferencesPlugin.php:524
+#: ItemReferencesPlugin.php:439 ItemReferencesPlugin.php:523
 msgid "Reference"
 msgstr ""
 
-#: ItemReferencesPlugin.php:589
+#: ItemReferencesPlugin.php:442 ItemReferencesPlugin.php:526
+#: ItemReferencesPlugin.php:602
+msgid "Details"
+msgstr ""
+
+#: ItemReferencesPlugin.php:588
 msgid "Items Referencing this Item"
 msgstr ""
 
-#: ItemReferencesPlugin.php:637
+#: ItemReferencesPlugin.php:636
 msgid "Geolocations of References Items"
 msgstr ""
 
-#: ItemReferencesPlugin.php:685 ItemReferencesPlugin.php:791
+#: ItemReferencesPlugin.php:685 ItemReferencesPlugin.php:793
 msgid "Select Map Overlay:"
 msgstr ""
 
-#: ItemReferencesPlugin.php:725
+#: ItemReferencesPlugin.php:726
 msgid "Geolocations of Second Level References Items"
 msgstr ""
 
@@ -80,6 +92,10 @@ msgstr ""
 msgid ""
 "Click button below to configure the reference representation (e.g. to "
 "display reference geolocations together in a map)."
+msgstr ""
+
+#: config_form.php:43
+msgid "Configure"
 msgstr ""
 
 #: config_form2.php:8
@@ -163,23 +179,35 @@ msgid "pink"
 msgstr ""
 
 #: item-references-form.php:21
+msgid "Item Types"
+msgstr ""
+
+#: item-references-form.php:31
+msgid "Partial Object Title"
+msgstr ""
+
+#: item-references-form.php:38
+msgid "Limit Item IDs (“x” or “x-y”)"
+msgstr ""
+
+#: item-references-form.php:48
 msgid "Item Sort"
 msgstr ""
 
-#: item-references-form.php:24
+#: item-references-form.php:53
 msgid "Most recently updated"
 msgstr ""
 
-#: item-references-form.php:26
+#: item-references-form.php:57
 msgid "Alphabetically"
 msgstr ""
 
-#: item-references-form.php:30
+#: item-references-form.php:64
 msgid "Object Title"
 msgstr ""
 
-#: item-references-form.php:32
-msgid "Partial Object Title"
+#: item-references-form.php:70
+msgid "[Search and Select Below]"
 msgstr ""
 
 #: views/admin/index/index.php:2

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: WeSa Omeka\n"
 "Report-Msgid-Bugs-To: http://github.com/GerZah/plugin-ItemReferences/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2016-02-16 13:58+0100\n"
+"PO-Revision-Date: 2016-07-05 17:43+0200\n"
 "Last-Translator: Gero Zahn <gerozahn@campus.uni-paderborn.de>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/upb/wesa-omeka/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
@@ -17,33 +17,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 
-#: ItemReferencesPlugin.php:322
+#: ItemReferencesPlugin.php:227
+msgid "Item Type"
+msgstr "Objekttyp"
+
+#: ItemReferencesPlugin.php:321
 msgid "All"
 msgstr "Alle"
 
-#: ItemReferencesPlugin.php:413
+#: ItemReferencesPlugin.php:411 item-references-form.php:85
+msgid "Select"
+msgstr "Auswählen"
+
+#: ItemReferencesPlugin.php:412
 msgid "Clear"
 msgstr "Löschen"
 
-#: ItemReferencesPlugin.php:440 ItemReferencesPlugin.php:524
+#: ItemReferencesPlugin.php:439 ItemReferencesPlugin.php:523
 msgid "Reference"
 msgstr "Referenz"
 
-#: ItemReferencesPlugin.php:589
+#: ItemReferencesPlugin.php:442 ItemReferencesPlugin.php:526 ItemReferencesPlugin.php:602
+msgid "Details"
+msgstr "Details"
+
+#: ItemReferencesPlugin.php:588
 msgid "Items Referencing this Item"
 msgstr "Objekte, die dieses Objekt referenzieren"
 
-#: ItemReferencesPlugin.php:637
+#: ItemReferencesPlugin.php:636
 msgid "Geolocations of References Items"
 msgstr "Geolokalisierungen von referenzierten Objekten"
 
-#: ItemReferencesPlugin.php:685 ItemReferencesPlugin.php:791
+#: ItemReferencesPlugin.php:685 ItemReferencesPlugin.php:793
 msgid "Select Map Overlay:"
 msgstr "Kartenüberlagerung auswählen:"
 
-#: ItemReferencesPlugin.php:725
+#: ItemReferencesPlugin.php:726
 msgid "Geolocations of Second Level References Items"
 msgstr "Geolokalisierungen von referenzierten Objekten zweiter Ordnung"
 
@@ -74,6 +86,10 @@ msgstr "Referenz-Elemente-Konfiguration"
 #: config_form.php:38
 msgid "Click button below to configure the reference representation (e.g. to display reference geolocations together in a map)."
 msgstr "Klicken Sie unten stehenden Button, um die Darstellung der Referenzen zu konfigurieren (beispielsweise um alle Referenz-Geolokalisierungen zusammen in einer Karte darzustellen)."
+
+#: config_form.php:43
+msgid "Configure"
+msgstr "Konfigurieren"
 
 #: config_form2.php:8
 msgid "Height for Reference Map"
@@ -144,24 +160,36 @@ msgid "pink"
 msgstr "rosa"
 
 #: item-references-form.php:21
+msgid "Item Types"
+msgstr "Objekttypen"
+
+#: item-references-form.php:31
+msgid "Partial Object Title"
+msgstr "Teilweiser Objekt-Titel"
+
+#: item-references-form.php:38
+msgid "Limit Item IDs (“x” or “x-y”)"
+msgstr "Objekt-IDs beschr. („x“ oder „x-y“)"
+
+#: item-references-form.php:48
 msgid "Item Sort"
 msgstr "Objektsortierung"
 
-#: item-references-form.php:24
+#: item-references-form.php:53
 msgid "Most recently updated"
 msgstr "Kürzlich bearbeitet"
 
-#: item-references-form.php:26
+#: item-references-form.php:57
 msgid "Alphabetically"
 msgstr "Alphabetisch"
 
-#: item-references-form.php:30
+#: item-references-form.php:64
 msgid "Object Title"
 msgstr "Objekt-Titel"
 
-#: item-references-form.php:32
-msgid "Partial Object Title"
-msgstr "Teilweiser Objekt-Titel"
+#: item-references-form.php:70
+msgid "[Search and Select Below]"
+msgstr "[Unten suchen und auswählen]"
 
 #: views/admin/index/index.php:2
 msgid "Item References"

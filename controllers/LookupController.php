@@ -13,6 +13,9 @@ class ItemReferences_LookupController extends Omeka_Controller_AbstractActionCon
       if (!$this->_hasParam('partialReference')) {
           $this->_setParam('partialReference', '');
       }
+        if (!$this->_hasParam('id_limitReference')) {
+            $this->_setParam('id_limitReference', '');
+        }
       if (!$this->_hasParam('item_typeReference')) {
           $this->_setParam('item_typeReference', -1);
       }
@@ -31,6 +34,19 @@ class ItemReferences_LookupController extends Omeka_Controller_AbstractActionCon
       if (strlen($partial) > 0) {
           $where_text = 'AND text RLIKE ' . $db->quote($partial);
       }
+
+        $where_id_limitReference = '';
+        if (preg_match("/\s*(\d+)(?:-(\d+))?\s*/", $this->_getParam('id_limitReference'), $matches)) {
+          $fromId = $matches[1];
+          $toId = @$matches[2];
+          if (!$toId) { $toId = $fromId; }
+          if ($fromId > $toId) {
+            $tmpId = $toId;
+            $toId = $fromId;
+            $fromId = $tmpId;
+          }
+          $where_id_limitReference = "AND items.id BETWEEN $fromId AND $toId";
+        }
 
       $item_type = intval($this->_getParam('item_typeReference'));
       $where_item_type = '';
@@ -66,10 +82,11 @@ class ItemReferences_LookupController extends Omeka_Controller_AbstractActionCon
 SELECT count(*) AS count
 FROM {$db->Item} items
 LEFT JOIN {$db->Element_Texts} elementtexts
-ON (items.id = elementtexts.record_id)
+ON (items.id = elementtexts.record_id) AND (elementtexts.record_type = 'Item')
 WHERE elementtexts.element_id = $titleId
 $where_item_type
 $where_text
+$where_id_limitReference
 GROUP BY elementtexts.record_id
 QCOUNT;
       $m_count = count($db->fetchAll($query));
@@ -84,10 +101,11 @@ QCOUNT;
 SELECT items.id AS id, text
 FROM {$db->Item} items
 LEFT JOIN {$db->Element_Texts} elementtexts
-ON (items.id = elementtexts.record_id)
+ON (items.id = elementtexts.record_id) AND (elementtexts.record_type = 'Item')
 WHERE elementtexts.element_id = $titleId
 $where_item_type
 $where_text
+$where_id_limitReference
 GROUP BY elementtexts.record_id
 $order_clause
 LIMIT $per_page

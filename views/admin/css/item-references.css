@@ -13,3 +13,14 @@ ul#lookup-results-reference li:active {
 ul#lookup-results-reference li:hover {
     background-color: #f3f3e7;
 }
+
+span.refListItemId {
+  display: inline-block;
+  text-align: right;
+  vertical-align: bottom;
+  overflow: hidden;
+  margin-right: 1em;
+  width: 4em;
+  font-size: 80%;
+  color: #aaa;
+}
