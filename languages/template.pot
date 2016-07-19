@@ -25,7 +25,7 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: ItemReferencesPlugin.php:411 item-references-form.php:85
+#: ItemReferencesPlugin.php:411 item-references-form.php:84
 msgid "Select"
 msgstr ""
 
@@ -38,23 +38,51 @@ msgid "Reference"
 msgstr ""
 
 #: ItemReferencesPlugin.php:442 ItemReferencesPlugin.php:526
-#: ItemReferencesPlugin.php:602
+#: ItemReferencesPlugin.php:635
 msgid "Details"
 msgstr ""
 
-#: ItemReferencesPlugin.php:588
+#: ItemReferencesPlugin.php:596
+msgid "[n/a]"
+msgstr ""
+
+#: ItemReferencesPlugin.php:601
 msgid "Items Referencing this Item"
 msgstr ""
 
-#: ItemReferencesPlugin.php:636
+#: ItemReferencesPlugin.php:603
+msgid "Show / Hide"
+msgstr ""
+
+#: ItemReferencesPlugin.php:604
+msgid "Show / Hide All"
+msgstr ""
+
+#: ItemReferencesPlugin.php:670
 msgid "Geolocations of References Items"
 msgstr ""
 
-#: ItemReferencesPlugin.php:685 ItemReferencesPlugin.php:793
+#: ItemReferencesPlugin.php:738
+msgid "Linear Distances"
+msgstr ""
+
+#: ItemReferencesPlugin.php:741
+msgid "Start Point"
+msgstr ""
+
+#: ItemReferencesPlugin.php:742
+msgid "End Point"
+msgstr ""
+
+#: ItemReferencesPlugin.php:743
+msgid "Linear Distance"
+msgstr ""
+
+#: ItemReferencesPlugin.php:760 ItemReferencesPlugin.php:888
 msgid "Select Map Overlay:"
 msgstr ""
 
-#: ItemReferencesPlugin.php:726
+#: ItemReferencesPlugin.php:821
 msgid "Geolocations of Second Level References Items"
 msgstr ""
 
@@ -206,7 +234,7 @@ msgstr ""
 msgid "Object Title"
 msgstr ""
 
-#: item-references-form.php:70
+#: item-references-form.php:68
 msgid "[Search and Select Below]"
 msgstr ""
 

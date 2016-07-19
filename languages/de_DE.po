@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: WeSa Omeka\n"
 "Report-Msgid-Bugs-To: http://github.com/GerZah/plugin-ItemReferences/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2016-07-05 17:43+0200\n"
+"PO-Revision-Date: 2016-07-19 18:42+0200\n"
 "Last-Translator: Gero Zahn <gerozahn@campus.uni-paderborn.de>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/upb/wesa-omeka/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Objekttyp"
 msgid "All"
 msgstr "Alle"
 
-#: ItemReferencesPlugin.php:411 item-references-form.php:85
+#: ItemReferencesPlugin.php:411 item-references-form.php:84
 msgid "Select"
 msgstr "Auswählen"
 
@@ -39,23 +39,51 @@ msgstr "Löschen"
 msgid "Reference"
 msgstr "Referenz"
 
-#: ItemReferencesPlugin.php:442 ItemReferencesPlugin.php:526 ItemReferencesPlugin.php:602
+#: ItemReferencesPlugin.php:442 ItemReferencesPlugin.php:526 ItemReferencesPlugin.php:635
 msgid "Details"
 msgstr "Details"
 
-#: ItemReferencesPlugin.php:588
+#: ItemReferencesPlugin.php:596
+msgid "[n/a]"
+msgstr "[n.v.]"
+
+#: ItemReferencesPlugin.php:601
 msgid "Items Referencing this Item"
 msgstr "Objekte, die dieses Objekt referenzieren"
 
-#: ItemReferencesPlugin.php:636
+#: ItemReferencesPlugin.php:603
+msgid "Show / Hide"
+msgstr "Ein- / ausblenden"
+
+#: ItemReferencesPlugin.php:604
+msgid "Show / Hide All"
+msgstr "Alle ein- / ausblenden"
+
+#: ItemReferencesPlugin.php:670
 msgid "Geolocations of References Items"
 msgstr "Geolokalisierungen von referenzierten Objekten"
 
-#: ItemReferencesPlugin.php:685 ItemReferencesPlugin.php:793
+#: ItemReferencesPlugin.php:738
+msgid "Linear Distances"
+msgstr "Luftlinien-Entfernungen"
+
+#: ItemReferencesPlugin.php:741
+msgid "Start Point"
+msgstr "Startpunkt"
+
+#: ItemReferencesPlugin.php:742
+msgid "End Point"
+msgstr "Endpunkt"
+
+#: ItemReferencesPlugin.php:743
+msgid "Linear Distance"
+msgstr "Luftlinie"
+
+#: ItemReferencesPlugin.php:760 ItemReferencesPlugin.php:888
 msgid "Select Map Overlay:"
 msgstr "Kartenüberlagerung auswählen:"
 
-#: ItemReferencesPlugin.php:726
+#: ItemReferencesPlugin.php:821
 msgid "Geolocations of Second Level References Items"
 msgstr "Geolokalisierungen von referenzierten Objekten zweiter Ordnung"
 
@@ -187,7 +215,7 @@ msgstr "Alphabetisch"
 msgid "Object Title"
 msgstr "Objekt-Titel"
 
-#: item-references-form.php:70
+#: item-references-form.php:68
 msgid "[Search and Select Below]"
 msgstr "[Unten suchen und auswählen]"
 
