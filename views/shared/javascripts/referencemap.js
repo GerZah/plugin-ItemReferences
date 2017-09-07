@@ -38,7 +38,7 @@ jQuery( document ).ready(function() {
         var infoWindow = new google.maps.InfoWindow({ content: contentString });
 
         mapsData[i].coords[j].marker = new google.maps.Marker({
-          icon: 'http://maps.google.com/mapfiles/ms/icons/'+pinVerbColor+'-dot.png',
+          icon: 'https://maps.google.com/mapfiles/ms/icons/'+pinVerbColor+'-dot.png',
           title: curTitle,
           position: {lat: curLat, lng: curLng},
           map: thismap,
